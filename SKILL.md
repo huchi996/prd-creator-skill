@@ -1,32 +1,37 @@
 ---
 name: prd-creator
-description: Create comprehensive Product Requirement Documents (PRD) using an AI-driven 4-phase SOP workflow (需求孵化 -> 方案预研 -> 模块构建 -> 功能细化) with multi-role review (测试、研发、产品等角色评审). Use when the user needs to create, write, or draft a PRD, product requirements document, product spec, feature specification, or when discussing product features that need documentation with modular structure and Mermaid diagrams. Triggers on requests like "create a PRD", "write product requirements", "draft a spec", "建立PRD目录结构", "需求评审", or when starting a new product documentation project.
+version: 2.0.0
+description: Create comprehensive Product Requirement Documents (PRD) using an AI-driven 6-phase SOP workflow (需求孵化 -> 方案预研 -> 项目构建 -> 模块构建 -> 功能细化 -> 多角色评审) with multi-role review (测试、研发、产品等角色评审). Use when the user needs to create, write, or draft a PRD, product requirements document, product spec, feature specification, or when discussing product features that need documentation with modular structure and Mermaid diagrams. Triggers on requests like "create a PRD", "write product requirements", "draft a spec", "建立PRD目录结构", "需求评审", or when starting a new product documentation project.
 ---
 
 # PRD Creator - AI驱动型标准化作业程序
 
-Create well-structured Product Requirement Documents following a 4-phase AI-driven SOP workflow with multi-role review.
+Create well-structured Product Requirement Documents following a 6-phase AI-driven SOP workflow with multi-role review.
 
-## 5-Phase Workflow Overview
+## 6-Phase Workflow Overview
 
-```mermaid
+> **图表渲染**: 本文档中的 Mermaid 图表使用 [beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid) 渲染为高质量 SVG，支持 15+ 内置主题，确保在不同系统中视觉效果一致。
+
+```mermaid-svg
 flowchart TD
     A[阶段1: 需求孵化] --> B[阶段2: 方案预研]
-    B --> C[阶段3: 模块构建]
-    C --> D[阶段4: 功能细化]
-    D --> E[阶段5: 多角色评审]
-    E --> F{评审通过?}
-    F -->|否| D
-    F -->|是| G[进入开发]
+    B --> C[阶段3: 项目构建]
+    C --> D[阶段4: 模块构建]
+    D --> E[阶段5: 功能细化]
+    E --> F[阶段6: 多角色评审]
+    F --> G{评审通过?}
+    G -->|否| E
+    G -->|是| H[进入开发]
 ```
 
 | 阶段 | 名称 | 核心动作 | 产出物 |
 |------|------|----------|--------|
 | 1 | 需求孵化 | 人机对话澄清需求 | 《需求描述文档》 |
-| 2 | 方案预研 | AI搜索最佳实践 | 《技术预研报告》+ 模块清单 |
-| 3 | 模块构建 | 生成模块级PRD | `M001-xxx.md` + 架构图 |
-| 4 | 功能细化 | 生成功能级PRD | `M001/F001-xxx.md` + 流程图 |
-| **5** | **多角色评审** | **测试/研发/产品等角色评审** | **《评审报告》+ 修改清单** |
+| 2 | 方案预研 | AI搜索最佳实践 | 《技术预研报告》+ 项目/模块清单 |
+| 3 | 项目构建 | 生成项目级PRD | `P001/` 目录 + 项目README |
+| 4 | 模块构建 | 生成模块级PRD | `P001/M001-xxx.md` + 架构图 |
+| 5 | 功能细化 | 生成功能级PRD | `P001/M001/F001-xxx.md` + 流程图 |
+| **6** | **多角色评审** | **测试/研发/产品等角色评审** | **《评审报告》+ 修改清单** |
 
 ---
 
@@ -59,8 +64,9 @@ flowchart TD
 3. **模块拆分** - 基于调研结果，生成模块清单（M001, M002...）
 
 ### Naming Convention
-- **模块文件**: `M{三位编号}-{模块名}.md` (e.g., `M001-用户中心.md`)
-- **功能文件**: `M{编号}/F{三位编号}-{功能名}.md` (e.g., `M001/F001-注册登录.md`)
+- **项目文件**: `P{三位编号}-{项目名}/` (e.g., `P001-用户中心平台/`)
+- **模块文件**: `P{编号}/M{三位编号}-{模块名}.md` (e.g., `P001/M001-用户认证.md`)
+- **功能文件**: `P{编号}/M{编号}/F{三位编号}-{功能名}.md` (e.g., `P001/M001/F001-注册登录.md`)
 
 ### Output
 - 《技术预研报告》（包含：竞品分析、技术栈建议、风险清单）
@@ -68,22 +74,68 @@ flowchart TD
 
 ---
 
-## Phase 3: 模块构建 (Module Construction)
+## Phase 3: 项目构建 (Project Construction)
 
 ### Goal
-生成模块主文档，定义模块的宏观逻辑与架构。
+创建项目目录，定义项目范围、目标和高层架构。
 
-### Directory Structure
+### Project Structure
+```
+prd/P{编号}-{项目名}/
+├── README.md                   <-- 项目概述文档
+├── M001-{模块A}.md            <-- 模块文档
+├── M001/                       <-- 功能子目录
+│   └── F001-{功能}.md
+└── M002-{模块B}.md
+```
+
+### Project README Template
+项目级 `README.md` 包含：
+1. **项目背景** - 为什么做这个项目
+2. **项目目标** - 量化指标和定性描述
+3. **范围边界** - In Scope / Out Scope
+4. **模块清单** - 该项目包含的所有模块预览
+5. **依赖关系** - 与其他项目的依赖关系图
+
+### Mermaid Diagrams for Projects
+- **System Context Diagram**: 展示项目与外部系统的关系
+- **Project Roadmap**: 展示模块迭代计划
+
+### Directory Structure (三层结构: P -> M -> F)
+
 ```
 prd/
-├── M001-用户中心.md      <-- 模块主文档
-├── M001/                 <-- 功能子目录
-│   ├── F001-注册登录.md
-│   └── F002-信息修改.md
-├── M002-考勤引擎.md
-└── M002/
-    └── F001-打卡记录.md
+├── P001-用户中心平台/          <-- 项目目录
+│   ├── README.md               <-- 项目概述
+│   ├── M001-用户认证.md        <-- 模块主文档
+│   ├── M001/                   <-- 功能子目录
+│   │   ├── F001-注册登录.md
+│   │   ├── F002-密码找回.md
+│   │   └── F003-第三方登录.md
+│   ├── M002-账户管理.md
+│   └── M002/
+│       ├── F001-资料修改.md
+│       └── F002-账号注销.md
+├── P002-订单管理系统/
+│   ├── README.md
+│   ├── M001-订单核心.md
+│   ├── M001/
+│   │   ├── F001-创建订单.md
+│   │   └── F002-取消订单.md
+│   └── M002-订单查询.md
+└── P003-报表统计系统/
+    ├── README.md
+    ├── M001-数据看板.md
+    └── M001/
+        ├── F001-实时报表.md
+        └── F002-定时推送.md
 ```
+
+**关键规则**:
+1. **项目层 (P)**: `P{三位编号}-{项目名}/` 目录，包含该项目所有模块
+2. **模块层 (M)**: `Pxxx/M{三位编号}-{模块名}.md`，定义模块宏观逻辑
+3. **功能层 (F)**: `Pxxx/Mxxx/F{三位编号}-{功能名}.md`，详细功能描述
+4. 三层编号相互独立，每层从 001 开始编号
 
 ### Module Document Template
 使用 `assets/module-template.md` 创建模块级文档，必须包含：
@@ -96,12 +148,45 @@ prd/
 - **Context Diagram**: 展示模块与外部系统的交互
 - **Container Diagram**: 展示模块内部组件关系
 
+> **渲染建议**: 推荐使用 `beautiful-mermaid` 生成 SVG 图表，支持以下主题：
+> - `tokyo-night` (暗色主题，推荐)
+> - `catppuccin-mocha` (柔和的暗色主题)
+> - `zinc-light` (亮色主题)
+> 
+> 示例:
+> ```javascript
+> import { renderMermaid, THEMES } from 'beautiful-mermaid'
+> const svg = await renderMermaid(diagram, THEMES['tokyo-night'])
+> ```
+
 ---
 
-## Phase 4: 功能细化 (Feature Elaboration)
+## Phase 4: 模块构建 (Module Construction)
+
+### Goal
+生成模块主文档，定义模块的宏观逻辑与架构。
+
+### Module Structure
+```
+prd/P001-项目名/
+├── M001-{模块名}.md           <-- 模块主文档
+└── M001/                      <-- 功能子目录
+    ├── F001-{功能A}.md
+    └── F002-{功能B}.md
+```
+
+## Phase 5: 功能细化 (Feature Elaboration)
 
 ### Goal
 深入具体功能点，输出可指导开发的详细文档。
+
+### Feature Structure
+```
+prd/P001-项目名/M001-模块名/
+├── F001-{功能A}.md
+├── F002-{功能B}.md
+└── F003-{功能C}.md
+```
 
 ### Feature Document Template
 使用 `assets/feature-template.md` 创建功能级文档，必须包含：
@@ -120,16 +205,26 @@ prd/
 - **Flowchart**: 展示业务流程分支
 - **State Diagram**: 展示状态机流转
 
+> **图表渲染**: 使用 `beautiful-mermaid` 生成 SVG 图表，确保跨平台一致的视觉效果。支持以下图表类型：Flowcharts、Sequence、State、Class、ER。
+> 
+> 使用方法:
+> ```javascript
+> import { renderMermaid } from 'beautiful-mermaid'
+> const svg = await renderMermaid(`sequenceDiagram...`, { theme: 'tokyo-night' })
+> ```
+
 ---
 
-## Phase 5: 多角色评审 (Multi-Role Review) ⭐
+## Phase 6: 多角色评审 (Multi-Role Review) ⭐
 
 ### Goal
 引入不同角色（产品经理、研发工程师、测试工程师、UI/UX设计师等）从不同维度评审PRD，确保需求的完整性、可实施性和可测试性。
 
 ### Review Process
 
-```mermaid
+> **图表说明**: 以下流程图使用 `beautiful-mermaid` 渲染，确保在各种环境下清晰可读。
+
+```mermaid-svg
 flowchart TD
     Start([开始评审]) --> Distribute[分发PRD给各角色]
     Distribute --> ParallelReview{并行评审}
@@ -188,7 +283,7 @@ flowchart TD
 ```
 用户: "我要做一个员工考勤系统"
 
-You: "我将按照5阶段SOP帮您创建PRD。首先进入阶段1：需求孵化。
+You: "我将按照6阶段SOP帮您创建PRD。首先进入阶段1：需求孵化。
       请描述：1) 目标用户 2) 核心场景 3) 关键功能点 4) 预期上线时间？"
 
 [Phase 1: 多轮对话澄清需求 -> 输出需求描述文档]
@@ -196,32 +291,52 @@ You: "我将按照5阶段SOP帮您创建PRD。首先进入阶段1：需求孵化
 You: "需求已明确。现在进入阶段2：方案预研。
       让我搜索相关技术方案和竞品做法..."
 
-[Phase 2: SearchWeb搜索 -> 输出技术预研报告 + 模块清单]
+[Phase 2: SearchWeb搜索 -> 输出技术预研报告 + 项目/模块拆分建议]
 
-You: "建议拆分为以下模块：
-      - M001-用户中心
-      - M002-考勤引擎
-      - M003-报表统计
-      确认后开始生成模块文档？"
+You: "建议拆分为以下项目：
+      - P001-考勤核心系统 (M001-打卡引擎, M002-排班管理)
+      - P002-审批流程系统 (M001-请假审批, M002-加班审批)
+      - P003-报表统计系统 (M001-个人报表, M002-部门报表)
+      确认后开始生成项目结构？"
 
-[Phase 3: 逐个创建 M001-xxx.md, M002-xxx.md...]
+[Phase 3: 创建项目目录 P001/, P002/, P003/... 并生成 README.md]
 
-[Phase 4: 为每个模块创建 F001-xxx.md, F002-xxx.md...]
+[Phase 4: 为每个项目创建模块文档 Pxxx/M001-xxx.md, Pxxx/M002-xxx.md...]
 
-You: "PRD初稿已完成。现在进入阶段5：多角色评审。
+[Phase 5: 为每个模块创建功能文档 Pxxx/Mxxx/F001-xxx.md...]
+
+You: "PRD初稿已完成。现在进入阶段6：多角色评审。
       我将模拟产品经理、研发工程师、测试工程师等角色进行评审..."
 
-[Phase 5: 多角色评审 -> 生成评审报告 -> 修改PRD]
+[Phase 6: 多角色评审 -> 生成评审报告 -> 修改PRD]
 
 You: "评审已完成，PRD已根据意见修改。现在可以进入开发阶段了！"
 ```
 
-### File Generation Rules
-1. 先创建目录 `prd/`
-2. Phase 3: 每个模块创建一个 `Mxxx-名称.md` 在根目录
-3. Phase 4: 为每个模块创建子目录 `Mxxx/`，内含功能文档
-4. Phase 5: 生成 `prd/评审报告.md` 记录各角色意见
-5. 所有文档使用 `.md` 格式，内嵌 Mermaid 图表
+### File Generation Rules (三层结构: P -> M -> F)
+
+#### 6-Phase 文件生成流程
+1. **Phase 2**: 确定项目拆分，生成项目清单 `P001, P002...`
+2. **Phase 3**: 为每个项目创建目录 `prd/Pxxx-{项目名}/`，包含 `README.md`
+3. **Phase 4**: 为每个项目创建模块 `prd/Pxxx/Mxxx-{模块名}.md`
+4. **Phase 5**: 为每个模块创建功能目录 `prd/Pxxx/Mxxx/Fxxx-{功能名}.md`
+5. **Phase 6**: 生成 `prd/评审报告.md` 记录各角色意见
+6. 所有文档使用 `.md` 格式，内嵌 Mermaid 图表
+
+#### 路径规则
+| 层级 | 路径格式 | 示例 |
+|------|----------|------|
+| 项目 | `prd/P{三位}-{项目名}/` | `prd/P001-用户中心平台/` |
+| 模块 | `prd/Pxxx/M{三位}-{模块名}.md` | `prd/P001/M001-用户认证.md` |
+| 功能 | `prd/Pxxx/Mxxx/F{三位}-{功能名}.md` | `prd/P001/M001/F001-注册登录.md` |
+
+#### 跨项目引用
+在 F 文档中引用其他项目的模块：
+```markdown
+## 相关文档
+- 所属模块: [M001-用户认证.md](../M001-用户认证.md)
+- 跨项目依赖: [P002/M001-订单核心.md](../../P002-订单管理系统/M001-订单核心.md)
+```
 
 ---
 

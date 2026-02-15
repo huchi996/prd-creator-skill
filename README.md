@@ -61,6 +61,33 @@ prd-creator-skill/
 
 #### 安装
 
+**对于 OpenCode AI Agent：**
+
+1. **安装 OpenCode**
+   ```bash
+   npm install -g opencode
+   ```
+
+2. **配置 LLM** (需要先安装 LLM)
+   ```bash
+   # 配置 Claude API
+   opencode config set llm claude
+   # 或配置其他 LLM 提供商
+   opencode config set llm <provider>
+   ```
+
+3. **安装 Skill**
+   ```bash
+   # 克隆仓库
+   git clone https://github.com/huchi996/prd-creator-skill.git
+   cd prd-creator-skill
+
+   # 在 OpenCode 中安装 skill
+   opencode skill install ./prd-creator-skill
+   ```
+
+**对于其他 AI Agent：**
+
 将本 skill 复制到你的 AI Agent skills 目录：
 
 ```bash
@@ -168,6 +195,33 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 ### 🚀 Quick Start
 
 #### Installation
+
+**For OpenCode AI Agent:**
+
+1. **Install OpenCode**
+   ```bash
+   npm install -g opencode
+   ```
+
+2. **Configure LLM** (requires LLM to be installed first)
+   ```bash
+   # Configure Claude API
+   opencode config set llm claude
+   # Or configure other LLM providers
+   opencode config set llm <provider>
+   ```
+
+3. **Install Skill**
+   ```bash
+   # Clone the repository
+   git clone https://github.com/huchi996/prd-creator-skill.git
+   cd prd-creator-skill
+
+   # Install skill in OpenCode
+   opencode skill install ./prd-creator-skill
+   ```
+
+**For other AI Agents:**
 
 Copy this skill to your AI Agent skills directory:
 

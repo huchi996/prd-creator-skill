@@ -7,6 +7,10 @@
 
 ---
 
+> **图表渲染**: 本文档中的图表使用 [beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid) 渲染为高质量 SVG。支持的图表类型: Flowchart, Sequence, State, Class, ER。
+
+---
+
 ## 1. 模块概述
 
 ### 1.1 业务背景
@@ -96,6 +100,8 @@ flowchart TB
 |----------|----------|--------|------|----------|
 | F001 | [功能1名称] | P0/P1/P2 | 待开发 | [F001-xxx.md](./M{编号}/F001-xxx.md) |
 | F002 | [功能2名称] | P0/P1/P2 | 待开发 | [F002-xxx.md](./M{编号}/F002-xxx.md) |
+
+> **路径说明**: 功能文档位于 `Pxxx/M{编号}/Fxxx-xxx.md`
 
 ---
 

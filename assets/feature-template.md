@@ -8,6 +8,10 @@
 
 ---
 
+> **图表渲染**: 本文档中的流程图使用 [beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid) 渲染。推荐使用 `tokyo-night` 或 `catppuccin-mocha` 主题获得最佳视觉效果。
+
+---
+
 ## 1. 功能说明
 
 ### 1.1 一句话描述
@@ -210,7 +214,8 @@ Entity: [实体名]
 
 ## 7. 相关文档
 
-- 所属模块: [Mxxx-模块名.md](../Mxxx-模块名.md)
+- 所属模块: [Mxxx-模块名.md](../M{编号}-模块名.md)
+- 项目概述: [README.md](../../README.md)
 - 相关功能: [Fxxx-功能名.md](./Fxxx-功能名.md)
 - 设计稿: [Figma链接]
 

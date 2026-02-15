@@ -1,6 +1,6 @@
 # PRD Creator Skill
 
-A professional Product Requirement Document (PRD) creation skill using AI-driven 5-phase SOP workflow with multi-role review.
+A professional Product Requirement Document (PRD) creation skill using AI-driven 6-phase SOP workflow with three-tier document structure and multi-role review.
 
 [中文](#中文说明) | [English](#english-description)
 
@@ -10,91 +10,88 @@ A professional Product Requirement Document (PRD) creation skill using AI-driven
 
 ### 🎯 简介
 
-**PRD Creator** 是一个专业的 AI 驱动产品需求文档（PRD）创建工具，采用标准化的 5 阶段 SOP 工作流，并支持多角色评审。
+**PRD Creator** 是一个专业的 AI 驱动产品需求文档（PRD）创建工具，采用标准化的 6 阶段 SOP 工作流，支持**三层文档结构（项目→模块→功能）**和多角色评审。
 
-### 📊 5 阶段工作流
+### 📊 6 阶段工作流
 
-```mermaid
+```mermaid-svg
 flowchart LR
     A[需求孵化] --> B[方案预研]
-    B --> C[模块构建]
-    C --> D[功能细化]
-    D --> E[多角色评审]
-    E --> F[进入开发]
+    B --> C[项目构建]
+    C --> D[模块构建]
+    D --> E[功能细化]
+    E --> F[多角色评审]
+    F --> G[进入开发]
 ```
 
-| 阶段 | 名称 | 产出物 |
-|------|------|--------|
-| 1 | 需求孵化 | 《需求描述文档》 |
-| 2 | 方案预研 | 《技术预研报告》+ 模块清单 |
-| 3 | 模块构建 | 模块级 PRD (`M001-xxx.md`) |
-| 4 | 功能细化 | 功能级 PRD (`M001/F001-xxx.md`) |
-| 5 | 多角色评审 | 《评审报告》+ 修改清单 |
+| 阶段 | 名称 | 核心动作 | 产出物 |
+|------|------|----------|--------|
+| 1 | 需求孵化 | 人机对话澄清需求 | 《需求描述文档》 |
+| 2 | 方案预研 | AI 搜索最佳实践 | 《技术预研报告》+ 项目/模块清单 |
+| 3 | 项目构建 | 创建项目目录 | `P001/` 目录 + 项目 README |
+| 4 | 模块构建 | 生成模块级 PRD | `P001/M001-xxx.md` + 架构图 |
+| 5 | 功能细化 | 生成功能级 PRD | `P001/M001/F001-xxx.md` + 流程图 |
+| 6 | 多角色评审 | 测试/研发/产品等评审 | 《评审报告》+ 修改清单 |
 
 ### ✨ 核心特性
 
 - **🤖 AI 驱动**：自动搜索技术方案、生成架构图
-- **📐 标准化**：模块化 PRD 结构，易于维护
+- **🏗️ 三层结构**：项目(P) → 模块(M) → 功能(F) 分层管理
 - **👥 多角色评审**：支持产品、研发、测试、设计等角色评审
-- **📈 可视化**：使用 Mermaid 图表展示架构和流程
+- **🎨 高质量图表**：使用 [beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid) 渲染美观 SVG
 - **🔁 迭代友好**：从 PRD 到代码的无缝衔接
 
-### 📁 文件结构
+### 📁 文档结构（三层结构）
 
 ```
-prd-creator-skill/
-├── SKILL.md                          # Skill 主文件
-├── README.md                         # 本文件
-├── LICENSE                           # MIT 许可证
-├── assets/                           # 模板文件
-│   ├── module-template.md            # 模块级 PRD 模板
-│   ├── feature-template.md           # 功能级 PRD 模板
-│   ├── requirement-summary-template.md
-│   ├── review-template.md            # 评审报告模板
-│   ├── review-checklists.md          # 评审检查清单
-│   └── review-example.md             # 评审示例
-└── references/
-    └── sop-guide.md                  # SOP 指南
+prd/
+├── P001-用户中心平台/          # 项目目录
+│   ├── README.md               # 项目概述
+│   ├── M001-用户认证.md        # 模块文档
+│   ├── M001/                   # 功能子目录
+│   │   ├── F001-注册登录.md
+│   │   ├── F002-密码找回.md
+│   │   └── F003-第三方登录.md
+│   ├── M002-账户管理.md
+│   └── M002/
+│       ├── F001-资料修改.md
+│       └── F002-账号注销.md
+├── P002-订单管理系统/
+│   ├── README.md
+│   ├── M001-订单核心.md
+│   └── M001/
+│       ├── F001-创建订单.md
+│       └── F002-取消订单.md
+└── P003-报表统计系统/
+    ├── README.md
+    └── M001-数据看板.md
 ```
+
+**命名规范**：
+- 项目：`P{三位}-{项目名}/` (如 `P001-用户中心平台/`)
+- 模块：`Pxxx/M{三位}-{模块名}.md` (如 `P001/M001-用户认证.md`)
+- 功能：`Pxxx/Mxxx/F{三位}-{功能名}.md` (如 `P001/M001/F001-注册登录.md`)
 
 ### 🚀 快速开始
 
 #### 安装
 
-**对于 OpenCode AI Agent：**
+**对于 Kimi CLI：**
 
-1. **安装 OpenCode**
-   ```bash
-   npm install -g opencode
-   ```
+```bash
+# 克隆仓库
+git clone https://github.com/huchi996/prd-creator-skill.git
 
-2. **配置 LLM** (需要先安装 LLM)
-   ```bash
-   # 配置 Claude API
-   opencode config set llm claude
-   # 或配置其他 LLM 提供商
-   opencode config set llm <provider>
-   ```
-
-3. **安装 Skill**
-   ```bash
-   # 克隆仓库
-   git clone https://github.com/huchi996/prd-creator-skill.git
-   cd prd-creator-skill
-
-   # 在 OpenCode 中安装 skill
-   opencode skill install ./prd-creator-skill
-   ```
+# 复制到 Kimi skills 目录
+cp -r prd-creator-skill ~/.agents/skills/
+```
 
 **对于其他 AI Agent：**
 
 将本 skill 复制到你的 AI Agent skills 目录：
 
 ```bash
-# 对于 Kimi CLI
-cp -r prd-creator-skill ~/.kimi/skills/
-
-# 对于其他 AI Agent，复制到对应的 skills 目录
+# 复制到对应的 skills 目录
 ```
 
 #### 使用
@@ -102,6 +99,13 @@ cp -r prd-creator-skill ~/.kimi/skills/
 1. **创建完整 PRD**
    ```
    用户: "我要做一个员工考勤系统，帮我创建PRD"
+   
+   AI 将自动执行 6 阶段流程：
+   - Phase 1-2: 需求澄清和技术预研
+   - Phase 3: 创建项目目录 P001-考勤系统/
+   - Phase 4: 创建模块 M001-打卡引擎、M002-排班管理...
+   - Phase 5: 创建功能 F001-打卡记录、F002-请假审批...
+   - Phase 6: 多角色评审
    ```
 
 2. **多角色评审**
@@ -112,10 +116,19 @@ cp -r prd-creator-skill ~/.kimi/skills/
    用户: "请以测试工程师的角度评审这个PRD"
    ```
 
-3. **关注特定维度**
-   ```
-   用户: "请从性能和安全性角度评审这个PRD"
-   ```
+### 🎨 图表渲染
+
+本 skill 使用 **[beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid)** 渲染高质量 SVG 图表：
+
+- **15+ 内置主题**：tokyo-night、catppuccin-mocha、nord、github 等
+- **双输出模式**：SVG（富 UI）和 ASCII（终端）
+- **零 DOM 依赖**：支持服务器端渲染
+
+```javascript
+import { renderMermaid, THEMES } from 'beautiful-mermaid'
+
+const svg = await renderMermaid(diagram, THEMES['tokyo-night'])
+```
 
 ### 📖 使用示例
 
@@ -124,32 +137,30 @@ cp -r prd-creator-skill ~/.kimi/skills/
 ```
 用户: 我要做一个轻量级任务管理系统
 
-AI: 
+AI:
 [Phase 1] 需求澄清：目标用户是谁？核心场景？
 [Phase 2] 方案预研：搜索竞品、推荐技术栈
-[Phase 3] 模块拆分：M001-看板视图、M002-任务管理...
-[Phase 4] 功能细化：F001-按项目看板、F002-拖拽排序...
-[Phase 5] 多角色评审：👤💻🧪🎨 各角色意见...
+[Phase 3] 项目构建：创建 P001-任务管理系统/
+[Phase 4] 模块构建：M001-看板视图、M002-任务管理...
+[Phase 5] 功能细化：F001-按项目看板、F002-拖拽排序...
+[Phase 6] 多角色评审：👤💻🧪🎨 各角色意见...
 
 产出：prd/ 目录下完整的 PRD 文档
 ```
 
-#### 示例 2：多角色评审输出
+#### 示例 2：三层结构输出
 
 ```
---- 👤 产品经理评审 ---
-✅ 业务逻辑完整
-⚠️ 建议：补充字段长度约束
-
---- 💻 研发工程师评审 ---
-✅ 技术方案可行
-⚠️ 风险：乐观锁实现复杂度较高
-
---- 🧪 测试工程师评审 ---
-🔴 问题：缺少验收标准
-🔴 问题：边界情况覆盖不足
-
-评审结论：条件通过，修改高风险问题后进入开发
+prd/
+├── P001-任务管理系统/
+│   ├── README.md              # 项目概述
+│   ├── M001-看板视图.md       # 模块：看板视图
+│   └── M001/
+│       ├── F001-列表视图.md   # 功能：列表视图
+│       └── F002-拖拽排序.md   # 功能：拖拽排序
+└── P002-报表系统/
+    ├── README.md
+    └── M001-数据看板.md
 ```
 
 ### 👥 评审角色
@@ -172,79 +183,106 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ### 🎯 Overview
 
-**PRD Creator** is a professional AI-driven Product Requirement Document creation tool using a standardized 5-phase SOP workflow with multi-role review capabilities.
+**PRD Creator** is a professional AI-driven Product Requirement Document creation tool using a standardized 6-phase SOP workflow with **three-tier document structure (Project → Module → Feature)** and multi-role review capabilities.
 
-### 📊 5-Phase Workflow
+### 📊 6-Phase Workflow
 
-| Phase | Name | Output |
-|-------|------|--------|
-| 1 | Requirement Incubation | Requirement Summary Document |
-| 2 | Solution Research | Technical Research Report + Module List |
-| 3 | Module Construction | Module-level PRD (`M001-xxx.md`) |
-| 4 | Feature Elaboration | Feature-level PRD (`M001/F001-xxx.md`) |
-| 5 | Multi-Role Review | Review Report + Action Items |
+| Phase | Name | Action | Output |
+|-------|------|--------|--------|
+| 1 | Requirement Incubation | Human-AI collaboration | Requirement Summary |
+| 2 | Solution Research | AI-powered tech research | Research Report + Project/Module List |
+| 3 | Project Construction | Create project directory | `P001/` + Project README |
+| 4 | Module Construction | Module-level PRD | `P001/M001-xxx.md` + Architecture |
+| 5 | Feature Elaboration | Feature-level PRD | `P001/M001/F001-xxx.md` + Flowcharts |
+| 6 | Multi-Role Review | QA/Dev/PM review | Review Report + Action Items |
 
 ### ✨ Key Features
 
 - **🤖 AI-Powered**: Auto-search technical solutions, generate architecture diagrams
-- **📐 Standardized**: Modular PRD structure, easy to maintain
+- **🏗️ Three-Tier Structure**: Project(P) → Module(M) → Feature(F) layered management
 - **👥 Multi-Role Review**: Support PM, Dev, QA, Designer roles
-- **📈 Visualization**: Use Mermaid diagrams for architecture and flows
+- **🎨 High-Quality Diagrams**: Use [beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid) for beautiful SVG rendering
 - **🔁 Iteration-Friendly**: Seamless handoff from PRD to code
+
+### 📁 Document Structure (Three-Tier)
+
+```
+prd/
+├── P001-user-center/           # Project directory
+│   ├── README.md               # Project overview
+│   ├── M001-auth.md            # Module document
+│   ├── M001/                   # Feature subdirectory
+│   │   ├── F001-login.md
+│   │   ├── F002-register.md
+│   │   └── F003-oauth.md
+│   ├── M002-account.md
+│   └── M002/
+│       ├── F001-profile.md
+│       └── F002-settings.md
+└── P002-order-system/
+    ├── README.md
+    └── M001-order-core.md
+```
+
+**Naming Convention**:
+- Project: `P{3-digit}-{name}/` (e.g., `P001-user-center/`)
+- Module: `Pxxx/M{3-digit}-{name}.md` (e.g., `P001/M001-auth.md`)
+- Feature: `Pxxx/Mxxx/F{3-digit}-{name}.md` (e.g., `P001/M001/F001-login.md`)
 
 ### 🚀 Quick Start
 
 #### Installation
 
-**For OpenCode AI Agent:**
+**For Kimi CLI:**
 
-1. **Install OpenCode**
-   ```bash
-   npm install -g opencode
-   ```
+```bash
+# Clone repository
+git clone https://github.com/huchi996/prd-creator-skill.git
 
-2. **Configure LLM** (requires LLM to be installed first)
-   ```bash
-   # Configure Claude API
-   opencode config set llm claude
-   # Or configure other LLM providers
-   opencode config set llm <provider>
-   ```
-
-3. **Install Skill**
-   ```bash
-   # Clone the repository
-   git clone https://github.com/huchi996/prd-creator-skill.git
-   cd prd-creator-skill
-
-   # Install skill in OpenCode
-   opencode skill install ./prd-creator-skill
-   ```
+# Copy to Kimi skills directory
+cp -r prd-creator-skill ~/.agents/skills/
+```
 
 **For other AI Agents:**
 
-Copy this skill to your AI Agent skills directory:
-
-```bash
-# For Kimi CLI
-cp -r prd-creator-skill ~/.kimi/skills/
-
-# For other AI agents, copy to the corresponding skills directory
-```
+Copy this skill to your AI Agent skills directory.
 
 #### Usage
 
 ```
 User: "I want to build a task management system, help me create a PRD"
 
-User: "Please conduct a multi-role review of this PRD"
+AI will execute 6-phase workflow automatically:
+- Phase 1-2: Requirement clarification & tech research
+- Phase 3: Create project directory P001-task-system/
+- Phase 4: Create modules M001-kanban, M002-task...
+- Phase 5: Create features F001-list-view, F002-drag-drop...
+- Phase 6: Multi-role review
+```
 
-User: "Please review this PRD from a test engineer's perspective"
+### 🎨 Diagram Rendering
+
+This skill uses **[beautiful-mermaid](https://github.com/lukilabs/beautiful-mermaid)** for high-quality SVG diagram rendering:
+
+- **15+ Built-in Themes**: tokyo-night, catppuccin-mocha, nord, github, etc.
+- **Dual Output**: SVG (rich UI) and ASCII (terminal)
+- **Zero DOM Dependencies**: Server-side rendering support
+
+```javascript
+import { renderMermaid, THEMES } from 'beautiful-mermaid'
+
+const svg = await renderMermaid(diagram, THEMES['tokyo-night'])
 ```
 
 ### 📄 License
 
 MIT License - see [LICENSE](LICENSE) file
+
+---
+
+## 版本历史 / Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ---
 
